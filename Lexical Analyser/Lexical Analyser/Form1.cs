@@ -12,18 +12,21 @@ namespace Lexical_Analyser
 {
     public partial class Form1 : Form
     {
+        lexgram abbas;
         public Form1()
         {
             InitializeComponent();
+
         }
 
         private void button1_Click(object sender, EventArgs e)
         {
-            if(richTextBox1 != null)
+            if (richTextBox1 != null)
             {
-                string a = richTextBox1.Text.Trim();
-                string[] satir = a.Split('\n');
-
+                abbas = new lexgram();
+                abbas.deneme = richTextBox1.Text;
+                abbas.trimmer();
+                richTextBox1.Text = abbas.deneme;
             }
             else
             {

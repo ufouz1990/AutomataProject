@@ -8,9 +8,34 @@ namespace Lexical_Analyser
 {
     class lexgram
     {
-        private static short lof_ident = 10;
-        bool check()
+       
+        public string deneme ="";
+        public string[] tek;
+     
+        public void trimmer()
         {
+            deneme = deneme.Trim();
+            deneme = deneme.Replace("("," ( ");
+            deneme = deneme.Replace(")", " ) ");
+            deneme = deneme.Replace("=","= ");
+            while(deneme.Contains("  "))deneme = deneme.Replace("  "," ");
+            while(deneme.Contains("\t"))deneme = deneme.Replace("\t", "");
+            while(deneme.Contains("\n "))deneme = deneme.Replace("\n ","\n");
+            while (deneme.Contains(" \n")) deneme = deneme.Replace(" \n", "\n");
+            while (deneme.Contains("\n\n")) deneme = deneme.Replace("\n\n", "\n");
+
+            tek = deneme.Split(' ');
+        }
+        
+        public bool check()
+        {
+            while(true)
+            {
+                switch(0)
+                {
+                }
+            }
+
             return true;
         }
 
