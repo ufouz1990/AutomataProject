@@ -12,7 +12,7 @@ namespace Lexical_Analyser
 {
     public partial class Form1 : Form
     {
-        lexgram abbas;
+        lexgram abbas= new lexgram();
         public Form1()
         {
             InitializeComponent();
@@ -23,14 +23,18 @@ namespace Lexical_Analyser
         {
             if (richTextBox1 != null)
             {
-                abbas = new lexgram();
                 abbas.deneme = richTextBox1.Text;
                 abbas.trimmer();
+                abbas.splitter();
+                
                 richTextBox1.Text = abbas.deneme;
             }
-            else
-            {
-            }
+        }
+
+        private void button2_Click(object sender, EventArgs e)
+        {
+            textBox1.Text = (abbas.check()) ? "Acceptable!" : "Unacceptable!";
+            richTextBox1.Text = abbas.deneme;
         }
 
     }

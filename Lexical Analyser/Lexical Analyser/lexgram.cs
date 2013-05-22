@@ -3,15 +3,17 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Text.RegularExpressions;
 
 namespace Lexical_Analyser
 {
     class lexgram
     {
-       
         public string deneme ="";
-        public string[] tek;
-     
+        public string[] satır;
+        public string[][] hece;
+        
+
         public void trimmer()
         {
             deneme = deneme.Trim();
@@ -23,27 +25,51 @@ namespace Lexical_Analyser
             while(deneme.Contains("\n "))deneme = deneme.Replace("\n ","\n");
             while (deneme.Contains(" \n")) deneme = deneme.Replace(" \n", "\n");
             while (deneme.Contains("\n\n")) deneme = deneme.Replace("\n\n", "\n");
-
-            tek = deneme.Split(' ');
+            deneme = deneme.ToLower();
         }
-        
+        public void splitter()
+        {
+            satır = deneme.Split('\n');
+            hece = new string[satır.Length][];
+
+            for (int i = 0; i < satır.Length; i++)
+            {
+                hece[i] = satır[i].Split(' ');
+            }
+        }
+
+
         public bool check()
         {
-            while(true)
-            {
-                switch(0)
-                {
-                }
-            }
-
+           
+           for(int i=0; i<satır.Length; i++)
+           {
+               for (int j = 0; j<hece[i].Length; j++ )
+               {
+                   if(hece[i][j].Contains("program"))
+                   {
+                   }
+                   else if (Regex.IsMatch(hece[i][j], @"^[a-z]\w*"))
+                   {
+                       deneme = "başarılı";
+                   }
+               }
+           }
             return true;
         }
 
         /***********************/
 
-        void s_input()
+        void s_input(string s)
         {
-            s_main(); /* | */s_stmt();
+            if (s.Contains("program") || s.Contains("Program"))
+            {
+                s_main();
+            }
+            else
+            {
+                s_stmt();
+            }
         }
         void s_main()
         {
