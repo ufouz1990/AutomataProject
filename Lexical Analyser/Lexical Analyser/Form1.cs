@@ -23,18 +23,23 @@ namespace Lexical_Analyser
         {
             if (richTextBox1 != null)
             {
-                abbas.deneme = richTextBox1.Text;
+                abbas.kod = richTextBox1.Text;
                 abbas.trimmer();
                 abbas.splitter();
                 
-                richTextBox1.Text = abbas.deneme;
+                richTextBox1.Text = abbas.kod;
             }
         }
 
         private void button2_Click(object sender, EventArgs e)
         {
-            textBox1.Text = (abbas.check()) ? "Acceptable!" : "Unacceptable!";
-            richTextBox1.Text = abbas.deneme;
+            abbas.BeginWhileEndKontrol();
+
+            if (abbas.acceptStatement)
+                textBox1.Text = "acceptable";
+            else
+                textBox1.Text = "unacceptable";
+
         }
 
     }

@@ -9,27 +9,27 @@ namespace Lexical_Analyser
 {
     class lexgram
     {
-        public string deneme ="";
+        public string kod ="";
         public string[] satır;
         public string[][] hece;
-        
+        public bool acceptStatement = false;
 
         public void trimmer()
         {
-            deneme = deneme.Trim();
-            deneme = deneme.Replace("("," ( ");
-            deneme = deneme.Replace(")", " ) ");
-            deneme = deneme.Replace("=","= ");
-            while(deneme.Contains("  "))deneme = deneme.Replace("  "," ");
-            while(deneme.Contains("\t"))deneme = deneme.Replace("\t", "");
-            while(deneme.Contains("\n "))deneme = deneme.Replace("\n ","\n");
-            while (deneme.Contains(" \n")) deneme = deneme.Replace(" \n", "\n");
-            while (deneme.Contains("\n\n")) deneme = deneme.Replace("\n\n", "\n");
-            deneme = deneme.ToLower();
+            kod = kod.Trim();
+            kod = kod.Replace("("," ( ");
+            kod = kod.Replace(")", " ) ");
+            kod = kod.Replace("=","= ");
+            while(kod.Contains("  "))kod = kod.Replace("  "," ");
+            while(kod.Contains("\t"))kod = kod.Replace("\t", "");
+            while(kod.Contains("\n "))kod = kod.Replace("\n ","\n");
+            while (kod.Contains(" \n")) kod = kod.Replace(" \n", "\n");
+            while (kod.Contains("\n\n")) kod = kod.Replace("\n\n", "\n");
+            kod = kod.ToLower();
         }
         public void splitter()
         {
-            satır = deneme.Split('\n');
+            satır = kod.Split('\n');
             hece = new string[satır.Length][];
 
             for (int i = 0; i < satır.Length; i++)
@@ -38,31 +38,73 @@ namespace Lexical_Analyser
             }
         }
 
-
-        public bool check()
+        public string tara()
         {
-           
-           for(int i=0; i<satır.Length; i++)
-           {
-               for (int j = 0; j<hece[i].Length; j++ )
-               {
-                   if(hece[i][j].Contains("program"))
-                   {
-                   }
-                   else if (Regex.IsMatch(hece[i][j], @"^[a-z]\w*"))
-                   {
-                       deneme = "başarılı";
-                   }
-               }
-           }
-            return true;
+            for(int i=0; i < hece.Length; i++)
+            {
+                for (int j = 0; j < hece[i].Length; j++ )
+                {
+                    return hece[i][j];
+                }
+            }
+            return "";
+        }
+
+        public void BeginWhileEndKontrol()
+        {
+            if (kod.Contains("program"))
+            {
+                if (kod.Contains("while"))
+                {
+                    if (kod.Contains("begin"))
+                    {
+                        if (TextTool.CountStringOccurrences(kod, "end") == 2)
+                            acceptStatement = true;
+                        else
+                            acceptStatement = false;
+                    }
+                    else
+                        acceptStatement = false;
+                }
+                else
+                {
+                    if (TextTool.CountStringOccurrences(kod, "end") == 1)
+                        acceptStatement = true;
+                    else
+                        acceptStatement = false;
+                }
+
+
+            }
+            else
+            {
+                if (kod.Contains("while"))
+                {
+                    if (kod.Contains("begin"))
+                    {
+                        if (TextTool.CountStringOccurrences(kod, "end") == 1)
+                            acceptStatement = true;
+                        else
+                            acceptStatement = false;
+                    }
+                    else
+                        acceptStatement = false;
+                }
+                else
+                {
+                    if (TextTool.CountStringOccurrences(kod, "end") == 0)
+                        acceptStatement = true;
+                    else
+                        acceptStatement = false;
+                }
+            }
         }
 
         /***********************/
 
         void s_input(string s)
         {
-            if (s.Contains("program") || s.Contains("Program"))
+            if (s.Contains("program") )
             {
                 s_main();
             }
