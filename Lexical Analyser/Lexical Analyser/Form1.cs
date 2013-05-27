@@ -25,7 +25,6 @@ namespace Lexical_Analyser
             {
                 abbas.kod = richTextBox1.Text;
                 abbas.trimmer();
-                abbas.splitter();
                 
                 richTextBox1.Text = abbas.kod;
             }
@@ -34,7 +33,8 @@ namespace Lexical_Analyser
         private void button2_Click(object sender, EventArgs e)
         {
             abbas.BeginWhileEndKontrol();
-
+            abbas.check(0);
+            richTextBox2.Text = abbas.outputKod;
             if (abbas.acceptStatement)
                 textBox1.Text = "acceptable";
             else
